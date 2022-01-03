@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"name": "layouter",
+			"path": "."
+		},
+		{
+			"path": "..\\animblend"
+		}
+	],
+	"settings": {
+		"githubPullRequests.remotes": [
+			"origin",
+			"upstream",
+			"https://github.com/calimanoliveira/layouter.git"
+		]
+	}
+}
