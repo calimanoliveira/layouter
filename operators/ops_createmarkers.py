@@ -5,6 +5,7 @@ from mathutils import Vector
 from math import radians
 
 from ..ui.ui_wgt_library import *
+from .ops_createcollections import *
 
 def get_wgt_collection(self, context):
     # List of collections.
@@ -50,14 +51,40 @@ class LT_OT_CreateMarkers(bpy.types.Operator):
         scene = context.scene
         myproperties = scene.my_properties
 
-        self.CreateCamera(context)
-        self.CreateRig(context)
-        self.ShapeBones(context)
+        # self.CreateCamera(context)
+        # self.CreateRig(context)
+        # self.ShapeBones(context)
 
-        marker = scene.timeline_markers.new(myproperties.nameMarker) # make a new marker
-        marker.frame = scene.frame_current # set a frame
-        marker.select = True # set selected
-        marker.camera = scene.objects.get(myproperties.nameMarker+"_CAM")
+        # marker = scene.timeline_markers.new(myproperties.nameMarker) # make a new marker
+        # marker.frame = scene.frame_current # set a frame
+        # marker.select = True # set selected
+        # marker.camera = scene.objects.get(myproperties.nameMarker+"_CAM")
+
+        for collection in bpy.data.collections:
+            #print(collection.name)
+            if collection.name == '01_CAMERAS':
+                self.CreateCamera(context)
+                self.CreateRig(context)
+                self.ShapeBones(context)
+
+                marker = scene.timeline_markers.new(myproperties.nameMarker) # make a new marker
+                marker.frame = scene.frame_current # set a frame
+                marker.select = True # set selected
+                marker.camera = scene.objects.get(myproperties.nameMarker+"_CAM")
+                return {"FINISHED"}
+            else:
+                LT_OT_CreateCollections.execute(self, context)
+                self.CreateCamera(context)
+                self.CreateRig(context)
+                self.ShapeBones(context)
+
+                marker = scene.timeline_markers.new(myproperties.nameMarker) # make a new marker
+                marker.frame = scene.frame_current # set a frame
+                marker.select = True # set selected
+                marker.camera = scene.objects.get(myproperties.nameMarker+"_CAM")
+
+                return {"FINISHED"}
+               
  
         return {"FINISHED"}
     
